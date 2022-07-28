@@ -67,6 +67,11 @@ passwordBox.place(x=850,y=270)
 Frame(centerFrame,width=200,height=2,bg='black').place(x=850,y=287)
 
 
+
+loginBtn = Button(centerFrame,borderwidth=0,text="Login",bg="#0c8599",fg="white",padx=50,command=loginValidity)
+loginBtn.place(y=340,x=880)
+
+
 # function to show the hidden password
 def showPassword():
    isChecked = checkVal.get()
@@ -83,6 +88,52 @@ showPassCheckbox.place(y=300,x=895)
 
 showPassLabel = Label(centerFrame,text="Show Password",bg="#f1f3f5")
 showPassLabel.place(y=301,x=910)
+
+
+def deleteUser():
+      editor = Tk()
+      editor.title("Edit task")
+      editor.geometry("300x140+100+50")
+
+
+      emailLabel = Label(editor,text="Enter your email")
+      emailLabel.pack()    
+
+      editInput = Entry(editor,width=10,font=("Verdana",14))
+      editInput.pack()
+
+      passwordLabel = Label(editor,text="Enter your password")
+      passwordLabel.pack()    
+
+      passInput = Entry(editor,width=10,font=("Verdana",14))
+      passInput.pack()
+   
+      def save():
+               newEmailValue = editInput.get()
+               givenPassword = passInput.get()
+
+               if (newEmailValue in userEmails ):
+                  conn = sqlite3.connect("userData.db")
+                  c = conn.cursor()
+                  c.execute(f"SELECT * FROM users WHERE email='{newEmailValue}'")
+                  currentRecord = c.fetchall()
+
+                  c.execute(f'DELETE FROM users WHERE email="{newEmailValue}"')
+
+
+                  currentPassword = currentRecord[0][3] 
+               try:
+                  if(givenPassword==currentPassword):
+                     conn.commit()
+                     conn.close()     
+                     messagebox.showinfo("Success","User Deleted")
+                     editor.destroy()
+               except:
+                     messagebox.error("Error","Wrong credentials entered")   
+               else:
+                  messagebox.showinfo("Error","Invalid Email Address")
+      saveBtn = Button(editor,text="Okay",command=save)
+      saveBtn.pack()
 
 
 
