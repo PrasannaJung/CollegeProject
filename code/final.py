@@ -87,6 +87,20 @@ def openWindow():
         else:
             lbldisplay["text"] = "please enter the text"
         txtinput.delete(0, 'end')
+        
+    def numbertsk():
+        numtask = len(tasks)
+        lbldisplay["text"] = numtask
+
+
+
+    def exitapp():
+        confex = messagebox.askquestion(
+            'Quit confirmation', 'Are you sure you want to quit?')
+        if confex.upper() == "YES":
+            root.destroy()
+        else:
+            pass
     
     lbltitle = tkinter.Label(root, text=f"{ourName.title()}", bg="#C0D7DF",fg="black",font=('Plateaux',60))
     lbltitle.place(x=550,y=130)
