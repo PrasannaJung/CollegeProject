@@ -40,6 +40,34 @@ def openWindow():
     
 
     
+    def clearlistbox():
+        lbltask.delete(0, "end")
+
+
+    def updatetask():
+        clearlistbox()
+        conn = sqlite3.connect("userData.db")
+
+        c = conn.cursor()
+
+        c.execute(f"SELECT * FROM list WHERE email='{ourEmail}'")
+        records = c.fetchall()
+        global tasks
+        tasks = []
+
+        for record in records:
+            tasks.append(record[1])
+
+        conn.commit()
+        conn.close()
+
+        for utask in tasks:
+            lbltask.insert("end", utask)
+        numtask = len(tasks)
+        lbldsp_count['text'] = numtask
+
+    
+    
     lbltitle = tkinter.Label(root, text=f"{ourName.title()}", bg="#C0D7DF",fg="black",font=('Plateaux',60))
     lbltitle.place(x=550,y=130)
 
