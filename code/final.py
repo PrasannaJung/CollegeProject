@@ -36,6 +36,32 @@ def openWindow():
     conn.close()
 
     
+    lbltitle = tkinter.Label(root, text=f"{ourName.title()}", bg="#C0D7DF",fg="black",font=('Plateaux',60))
+    lbltitle.place(x=550,y=130)
+
+    newtitle = tkinter.Label(root,text="Welcome!",bg="#C0D7DF",fg="black",font=("Plateaux",60))
+    newtitle.place(x=550,y=50)
+
+    
+    yourTask = tkinter.Label(root,text="Your tasks:",bg="#CDDBDE",font=('Plateaux',40),fg='black')
+    yourTask.place(x=800,y=315)
+
+    lbltask = tkinter.Listbox(root,width=25,height=9,font=('Verdana',20),border=2,background="white",relief="solid")
+    lbltask.place(x=800,y=374)
+    
+    lbltitle2 = tkinter.Label(root,text='Enter Task Title :',bg='#D1DFE0',font = ('Plateaux',20))
+    lbltitle2.place(x=500,y = 330)
+
+    lbldsp_count = tkinter.Label(root, text="", bg="white",border=0,background="#D8E1E0",width=3,height=2)
+    lbldsp_count.place(x = 460,y = 580)
+    
+    lbldisplay = tkinter.Label(root, text="0", bg="white",font=('italica',12),background='#C5D8DE')
+    lbldisplay.place(x=1215,y = 353)
+
+    txtinput = tkinter.Entry(root,width=20,font=("Verdana",14),relief='solid',border=2)
+    txtinput.place(x=500,y=380)
+
+    
 
     root.mainloop()
 
