@@ -66,6 +66,51 @@ passwordBox.place(x=850,y=270)
 
 Frame(centerFrame,width=200,height=2,bg='black').place(x=850,y=287)
 
+userEmails = []
+
+conn = sqlite3.connect("userData.db")
+
+c = conn.cursor()
+
+c.execute("SELECT *, oid FROM users")
+ourRecord = c.fetchall()
+
+for record in ourRecord:
+   userEmails.append(record[2])
+
+print(userEmails)
+conn.close()
+
+
+def loginValidity():
+   global givenEmail
+   givenEmail = emailBox.get()
+   givenPassword = passwordBox.get()
+
+   if(givenEmail in userEmails):
+         conn = sqlite3.connect("userData.db")
+         c = conn.cursor()
+
+         c.execute(f"SELECT * FROM users WHERE email='{givenEmail}'")
+         
+         
+         currentRecord = c.fetchall()
+         global firstName
+         firstName = currentRecord[0][0]
+
+         currentPassword = currentRecord[0][3] 
+
+         if(givenPassword==currentPassword):
+            messagebox.showinfo("Success","Logged in successfully")
+            root.destroy()
+            final.openWindow()
+         else:
+            messagebox.showinfo("Error","Wrong credentials entered")   
+         conn.commit()
+         conn.close()
+   else:
+         messagebox.showinfo("Error","Please enter a valid email address") 
+
 
 
 loginBtn = Button(centerFrame,borderwidth=0,text="Login",bg="#0c8599",fg="white",padx=50,command=loginValidity)
