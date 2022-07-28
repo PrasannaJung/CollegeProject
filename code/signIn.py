@@ -32,7 +32,7 @@ conn.commit()
 conn.close()
 
 
-background image for the main window
+# background image for the main window
 bg = PhotoImage(file = "images/groundOne.png")
 
 
@@ -65,6 +65,40 @@ passwordBox = Entry(centerFrame,width=32,show='*',border=0,background='#f1f3f5')
 passwordBox.place(x=850,y=270)
 
 Frame(centerFrame,width=200,height=2,bg='black').place(x=850,y=287)
+
+
+# function to show the hidden password
+def showPassword():
+   isChecked = checkVal.get()
+   if (isChecked==1):
+      passwordBox.config(show='')
+   else:
+      passwordBox.config(show='*')   
+
+      
+# show password checkbox
+checkVal = IntVar()
+showPassCheckbox = Checkbutton(centerFrame,text="",bg='#f1f3f5',variable=checkVal,onvalue=1,offvalue=0,command=showPassword)
+showPassCheckbox.place(y=300,x=895)
+
+showPassLabel = Label(centerFrame,text="Show Password",bg="#f1f3f5")
+showPassLabel.place(y=301,x=910)
+
+
+# Defining Some Buttons
+changePassword = Button(centerFrame,command=changePassword,text="Change Password",bg="#0c8599",fg="white",padx=17)
+changePassword.place(x=880,y=470)
+
+deleteAccount = Button(centerFrame,
+text='Delete Account',bg="#e03131",fg="#fff",padx=24,command=deleteUser)
+deleteAccount.place(x=880,y=505)
+
+noAccountOne = Label(centerFrame,text="Don't have an account?")
+noAccountOne.place(x=880,y=400)
+
+# creating a sign up button
+signUpBtn = Button(centerFrame,command=signUp,text="SignUp",fg="blue",bg="#f1f3f5",borderwidth=0)
+signUpBtn.place(x=920,y=430)
 
 
 
