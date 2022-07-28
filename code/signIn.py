@@ -85,6 +85,75 @@ showPassLabel = Label(centerFrame,text="Show Password",bg="#f1f3f5")
 showPassLabel.place(y=301,x=910)
 
 
+
+
+def changePassword():
+      editor = Tk()
+      editor.title("Change Password")  
+      editor.geometry("300x200+100+50") 
+
+
+      emailLabel = Label(editor,text="Enter your email")
+      emailLabel.pack()      
+      editInput = Entry(editor,width=10,font=("Verdana",14))
+      editInput.pack()
+      
+   
+      passwordLabel = Label(editor,text="Old password")
+      passwordLabel.pack() 
+      passInput = Entry(editor,width=10,font=("Verdana",14))
+      passInput.pack()
+
+
+      newPasswordLabel = Label(editor,text="New password")
+      newPasswordLabel.pack() 
+      newPassInput = Entry(editor,width=10,font=("Verdana",14))
+      newPassInput.pack()
+
+      def save():
+         newEmailValue = editInput.get()
+         givenPassword = passInput.get()
+         newPassword = newPassInput.get()
+
+         if (newEmailValue in userEmails ):
+                  
+
+            conn = sqlite3.connect("userData.db")
+            c = conn.cursor()
+            c.execute(f"SELECT * FROM users WHERE email='{newEmailValue}'")
+            currentRecord = c.fetchall()
+            currentPassword = currentRecord[0][3] 
+
+         try:
+            if(givenPassword==currentPassword):
+               conn = sqlite3.connect("userData.db")
+               c = conn.cursor()
+
+               c.execute(f"""UPDATE users SET 
+                        password=:newPassword
+                        WHERE email = '{newEmailValue}'
+                     """,{
+                  'newPassword':newPassword
+                  })
+               messagebox.showinfo("Success","Password Changed!")
+               editor.destroy()
+         except:
+               messagebox.showerror("Error","Wrong credentials entered")   
+         else:
+            messagebox.showinfo("Error","Invalid Email Address")
+         conn.commit()
+         conn.close()     
+
+
+
+            
+      saveBtn = Button(editor,text="Save",command=save)
+      saveBtn.pack()
+
+
+
+
+
 # Defining Some Buttons
 changePassword = Button(centerFrame,command=changePassword,text="Change Password",bg="#0c8599",fg="white",padx=17)
 changePassword.place(x=880,y=470)
