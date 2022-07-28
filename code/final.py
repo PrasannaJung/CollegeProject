@@ -34,6 +34,10 @@ def openWindow():
     # )""")
     conn.commit()
     conn.close()
+    
+    ourEmail = signIn.givenEmail
+    ourName = signIn.firstName
+    
 
     
     lbltitle = tkinter.Label(root, text=f"{ourName.title()}", bg="#C0D7DF",fg="black",font=('Plateaux',60))
