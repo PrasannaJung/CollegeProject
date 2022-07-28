@@ -88,6 +88,70 @@ def openWindow():
             lbldisplay["text"] = "please enter the text"
         txtinput.delete(0, 'end')
         
+        
+        
+    def deleteone():
+        delt = lbltask.get("active")
+        
+
+        if "'" in delt:
+            ourIndex = delt.index("'")
+            letters = list(delt)   
+            letters.insert(ourIndex,"\\")
+            delt = "".join(letters)
+            
+
+
+
+        conn = sqlite3.connect("userData.db")
+
+        c = conn.cursor()
+        c.execute(f'DELETE FROM list WHERE task="{delt}"')
+        
+        conn.commit()
+        conn.close()
+        if delt in tasks:
+            tasks.remove(delt)
+        updatetask()
+
+    def editTask():
+        editor = Tk()
+        editor.title("Edit task")
+        editor.geometry("300x100+50+50")
+
+        editInput = tkinter.Entry(editor,width=10,font=("Verdana",14))
+        editInput.pack()
+        delt = lbltask.get("active")
+        print(delt)
+
+        if "'" in delt:
+            ourIndex = delt.index("'")
+            letters = list(delt)   
+            letters.insert(ourIndex,"\\")
+            delt = "".join(letters)
+
+        def save():
+            newValue = editInput.get()
+            conn = sqlite3.connect("userData.db")
+            print(newValue)
+            c = conn.cursor()
+
+            c.execute(f"""UPDATE list SET 
+                task=:newTask
+                WHERE task = '{delt}'
+            """,{
+                'newTask':newValue
+            })
+
+            conn.commit()
+            conn.close()
+            updatetask()
+            editor.destroy()
+            
+        saveBtn = Button(editor,text="Save",command=save)
+        saveBtn.pack()
+        
+            
     def numbertsk():
         numtask = len(tasks)
         lbldisplay["text"] = numtask
