@@ -61,6 +61,19 @@ def openWindow():
     txtinput = tkinter.Entry(root,width=20,font=("Verdana",14),relief='solid',border=2)
     txtinput.place(x=500,y=380)
 
+    txtadd_button = tkinter.Button(
+        root, text="Add To Do", bg="white", fg="black", width=15, command=addtask,font=('Verdana',10),padx=58,border=4)
+    txtadd_button.place(x=500,y=430)
+
+    edit_button = tkinter.Button(
+        root, text="Edit", bg="white", fg="black", width=15, command=editTask,font=('Verdana',10),padx=58,border=4)
+    edit_button.place(x=500,y=480)
+
+
+    delonebutton = tkinter.Button(
+        root, text="Done Task", bg="white", width=15, command=deleteone,font=('Verdana',10),padx=58,border=4)
+    delonebutton.place(x=500,y=530)
+
     
 
     root.mainloop()
