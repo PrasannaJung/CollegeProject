@@ -74,6 +74,14 @@ def openWindow():
         root, text="Done Task", bg="white", width=15, command=deleteone,font=('Verdana',10),padx=58,border=4)
     delonebutton.place(x=500,y=530)
 
+    numbertsk = tkinter.Button(
+        root, text="Number of Task", bg="white", width=15, command=numbertsk,font=('Verdana',10),padx=58,border=4)
+    numbertsk.place(x=500,y=580)
+
+    exitbutton = tkinter.Button(root, text="exit app",
+                            bg="white", width=15, command=exitapp,font=('Verdana',10),padx=58,border=4)
+    exitbutton.place(x=500,y=630)
+
     
 
     root.mainloop()
