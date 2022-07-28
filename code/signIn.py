@@ -162,6 +162,96 @@ deleteAccount = Button(centerFrame,
 text='Delete Account',bg="#e03131",fg="#fff",padx=24,command=deleteUser)
 deleteAccount.place(x=880,y=505)
 
+
+# code to show up a new window and various widgets for the signup form
+def signUp():
+
+
+   
+   top = Toplevel()
+   top.title("Sign Up Form")
+   top.geometry("600x700+100+50")
+   top.config(bg="#fff")
+   bgcolor="red"
+   signUpFrame = LabelFrame(top,width=300,height=500,bg="#f1f3f5")
+   signUpFrame.place(x=150,y=100)
+
+   # inserting various widgets into the sign up form
+   fName = Label(signUpFrame,text="First Name",bg="#f1f3f5")
+   fName.place(x=30,y=25)
+
+   fNameBox = Entry(signUpFrame,width=30,border=0,bg='#f1f3f5')
+   fNameBox.place(x=30,y=50)
+
+   Frame(signUpFrame, width=200, height=2, bg='black').place(x=30, y=68)
+
+   lName = Label(signUpFrame,text="Last Name",bg="#f1f3f5")
+   lName.place(x=30,y=75)
+
+   lNameBox = Entry(signUpFrame,width=30,border=0,bg='#f1f3f5')
+   lNameBox.place(x=30,y=100)
+
+   Frame(signUpFrame, width=200,height=2,bg='black').place(x=30,y=118)
+   
+   newEmail = Label(signUpFrame,text="Email",bg="#f1f3f5")
+   newEmail.place(x=30,y=125)
+
+   newEmailBox = Entry(signUpFrame,width=30,border=0,bg='#f1f3f5')
+   newEmailBox.place(x=30,y=150)
+   
+   Frame(signUpFrame, width=200,height=2,bg='black').place(x=30,y=168)
+
+   newPassword = Label(signUpFrame,text="New Password",bg="#f1f3f5")
+   newPassword.place(x=30,y=175)
+
+   newPasswordBox = Entry(signUpFrame,width=30,border=0,bg='#f1f3f5')
+   newPasswordBox.place(x=30,y=200)
+   
+   Frame(signUpFrame, width=200,height=2,bg='black').place(x=30,y=218)
+   
+   confirmNewPassword = Label(signUpFrame,text="Confirm new password",bg="#f1f3f5")
+   confirmNewPassword.place(x=30,y=225)
+
+   confirmNewPasswordBox = Entry(signUpFrame,width=30,border=0,bg='#f1f3f5')
+   confirmNewPasswordBox.place(x=30,y=250)
+
+   Frame(signUpFrame, width=200,height=2,bg='black').place(x=30,y=268)
+
+
+   
+   def registerUser():
+      conn = sqlite3.connect("userData.db")
+
+      c = conn.cursor()
+      if (newPasswordBox.get()==confirmNewPasswordBox.get()):
+
+         c.execute("INSERT INTO users VALUES(:f_name,:l_name,:email,:password)",{
+            'f_name':fNameBox.get(),
+            'l_name':lNameBox.get(),
+            'email':newEmailBox.get(),
+            'password':confirmNewPasswordBox.get()
+         })
+         conn.commit()
+         conn.close()
+
+         fNameBox.delete(0,END)
+         lNameBox.delete(0,END)
+         newEmailBox.delete(0,END)
+         newPasswordBox.delete(0,END)
+         confirmNewPasswordBox.delete(0,END)
+         messagebox.showinfo("Success!","Signed up successfully")
+
+         top.destroy()
+      else:
+         messagebox.showinfo("Error","Password don't match. Please try again!")   
+
+   signBtn = Button(signUpFrame,text="SignUp",bg="#12b886",fg="white",padx=50,command=registerUser)
+   signBtn.place(x=51,y=300)
+
+
+
+
+
 noAccountOne = Label(centerFrame,text="Don't have an account?")
 noAccountOne.place(x=880,y=400)
 
