@@ -67,6 +67,26 @@ def openWindow():
         lbldsp_count['text'] = numtask
 
     
+    def addtask():
+        
+        lbldisplay["text"] = ""
+        newTask = txtinput.get()
+        if newTask != "":
+            # tasks.append(newTask)
+            conn = sqlite3.connect("userData.db")
+            c = conn.cursor()
+
+            c.execute("INSERT INTO list VALUES(:email,:task)",{
+                'email':ourEmail,
+                'task':txtinput.get()
+            })
+
+            conn.commit()
+            conn.close() 
+            updatetask()
+        else:
+            lbldisplay["text"] = "please enter the text"
+        txtinput.delete(0, 'end')
     
     lbltitle = tkinter.Label(root, text=f"{ourName.title()}", bg="#C0D7DF",fg="black",font=('Plateaux',60))
     lbltitle.place(x=550,y=130)
